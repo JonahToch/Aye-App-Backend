@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #[em Aye App], the beginning of something special.
+
+  h1 Dynamic content
+
+  if error
+    p Error getting dynamic content.
+  else
+    p The library has the following record counts:
+
+    ul
+      li #[strong Users:] !{data.user_count}
+      li #[strong Poops:] !{data.poop_count}
+      li #[strong Poop Instances:] !{data.poop_instance_count}
