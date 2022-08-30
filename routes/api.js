@@ -4,6 +4,8 @@ var router = express.Router();
 
 var user_controller = require('../controllers/usersController');
 var poop_controller = require('../controllers/poopController');
+var webController = require('../controllers/systemController');
+
 
 router.get('/', user_controller.index);
 
@@ -27,5 +29,7 @@ router.post('/poop/create', poop_controller.poop_create_post);
 router.get('/poops', poop_controller.poop_list);
 
 router.get('/poop/:id', poop_controller.poop_detail);
+
+router.get('/system/web-server-restart', webController.web_backend_restart);
 
 module.exports = router;

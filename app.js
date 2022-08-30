@@ -40,6 +40,9 @@ app.use(cors({
   origin: '*'
 }));
 
+module.exports = app;
+
+
 //
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {
@@ -85,6 +88,3 @@ app.use(cors({
 // })
 
 // mongoose.connection.close();
-
-
-module.exports = app;
