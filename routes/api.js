@@ -30,6 +30,6 @@ router.get('/poops', poop_controller.poop_list);
 
 router.get('/poop/:id', poop_controller.poop_detail);
 
-router.get('/system/web-server-restart', webController.web_backend_restart);
+router.post('/system/web-server-restart', webController.web_backend_restart);
 
 module.exports = router;
