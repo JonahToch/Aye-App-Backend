@@ -22,7 +22,7 @@ router.get('/poop/list-all', poop_controller.poop_all);
 
 router.post('/poop/create', poop_controller.poop_create_post);
 
-
+router.post('/poop/add-rating', poop_controller.poop_add_rating);
 //
 // router.post('/poop/update', poop_controller.poop_create_update);
 //

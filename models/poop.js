@@ -17,8 +17,8 @@ var PoopSchema = new Schema(
         longState: {type: String, required: false},
         country: {type: String, required: false},
         zipcode: {type: String, required: false},
-        // likes: {type: double, required: false},
-        // dislikes: {type: double, required: false}
+        likes: {type: Number, required: false, default: 0},
+        dislikes: {type: Number, required: false, default: 0}
     }
 );
 

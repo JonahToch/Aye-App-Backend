@@ -59,6 +59,17 @@ exports.poop_all = function(req, res, next) {
     };
 
 
+
+exports.poop_add_rating = function(req, res) {
+    Poop.findOne({ _id: "631017356a4447010cfb448c"}).
+    then(doc => Poop.updateOne({_id: doc._id }, {likes: 20})).
+    then((doc =>  res.json(doc)));
+
+};
+
+
+
+
 exports.poop_create_post = function(req, res) {
     var poop = new Poop();
     // poop.user = req.body.user;
@@ -91,9 +102,14 @@ exports.poop_create_post = function(req, res) {
         city: poop.city,
         longState: poop.longState,
         country: poop.country,
-        zipcode: poop.zipcode
+        zipcode: poop.zipcode,
+        likes: poop.likes,
+        dislikes: poop.dislikes
     });
 };
+
+
+
 
 exports.poop_create_update = function(req, res) {
     res.send('NOT IMPLEMENTED: Poop create update');
