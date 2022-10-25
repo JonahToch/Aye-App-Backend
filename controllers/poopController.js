@@ -61,12 +61,70 @@ exports.poop_all = function(req, res, next) {
 
 
 exports.poop_add_rating = function(req, res) {
-    Poop.findOne({ _id: "631017356a4447010cfb448c"}).
-    then(doc => Poop.updateOne({_id: doc._id }, {likes: 20})).
+
+    // console.log(req.body);
+
+    Poop.findOne({ _id: req.body._id}).
+    then(doc => Poop.updateOne({_id: doc._id }, {likes: (doc.likes + req.body.likes)} ))
+
+    Poop.findOne({ _id: req.body._id}).
+    then(doc => Poop.updateOne({_id: doc._id }, {dislikes: (doc.dislikes + req.body.dislikes) } )).
     then((doc =>  res.json(doc)));
 
 };
 
+exports.poop_add_comment = function(req, res) {
+
+    console.log(req.body);
+
+    Poop.findOneAndUpdate(
+        { _id: req.body._id},
+        { $push: {
+            comments: {
+                "user": req.body.user,
+                "text": req.body.text,
+                "date": req.body.date
+            }
+            }}
+    ).
+    then((doc =>  res.json(doc)));
+
+};
+
+exports.poop_add_comment_reply = function(req, res) {
+
+    const query = { _id: req.body.poop_id };
+    const updateDocument = {
+        $push: { "comments.$[item].replies": {
+                "user": req.body.user,
+                "text": req.body.text,
+                "date": req.body.date
+            } },
+    };
+    const options = {
+        arrayFilters: [
+            {
+                "item._id": req.body.comment_id,
+            },
+        ],
+    };
+
+
+    Poop.updateMany(query, updateDocument, options).
+    then((doc =>  res.json(doc)));
+};
+
+
+exports.poop_comment_add_rating = function(req, res) {
+
+    console.log(req.body);
+    Poop.update({'comments._id': req.body._id}, {'$inc': {
+            'comments.$.likes': req.body.likes,
+            'comments.$.dislikes': req.body.dislikes
+        }}).
+    then((doc =>  res.json(doc)));
+
+};
 
 
 

@@ -18,7 +18,23 @@ var PoopSchema = new Schema(
         country: {type: String, required: false},
         zipcode: {type: String, required: false},
         likes: {type: Number, required: false, default: 0},
-        dislikes: {type: Number, required: false, default: 0}
+        dislikes: {type: Number, required: false, default: 0},
+        comments: [
+                {
+                        user: String,
+                        text: String,
+                        date: Date,
+                        likes: {type: Number, default: 0},
+                        dislikes: {type: Number, default: 0},
+                        replies: [{
+                                user: String,
+                                text: String,
+                                date: Date,
+                                likes: { type: Number, default: 0},
+                                dislikes: { type: Number, default: 0}
+                        }]
+                }
+        ]
     }
 );
 
