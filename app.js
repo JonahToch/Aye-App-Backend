@@ -10,6 +10,16 @@ var apiRouter = require('./routes/api');
 
 var app = express();
 
+const cors = require('cors');
+
+app.use(cors({
+    origin: '*'
+}));
+app.options('*', cors()) // Not sure if needed. According to https://expressjs.com/en/resources/middleware/cors.html
+                         // This is already handled by above code but when I put this here it fixed a preflight error
+                         // Could have just been that I put the cors portion above the other parts of the code though.
+                         // Can't recreate for now so not sure.
+
 var async = require('async');
 var User = require('./models/users');
 var Poop = require('./models/poop');
@@ -34,11 +44,6 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/v1', apiRouter);
 
-const cors = require('cors');
-
-app.use(cors({
-  origin: '*'
-}));
 
 module.exports = app;
 
