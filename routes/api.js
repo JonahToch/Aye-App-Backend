@@ -4,6 +4,7 @@ var router = express.Router();
 
 var user_controller = require('../controllers/usersController');
 var poop_controller = require('../controllers/poopController');
+var auth_controller = require('../controllers/authController');
 var webController = require('../controllers/systemController');
 
 
@@ -39,5 +40,8 @@ router.get('/poops', poop_controller.poop_list);
 router.get('/poop/:id', poop_controller.poop_detail);
 
 router.post('/system/web-server-restart', webController.web_backend_restart);
+
+router.get('/auth', auth_controller.auth);
+
 
 module.exports = router;
