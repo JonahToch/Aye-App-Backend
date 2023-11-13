@@ -1,6 +1,7 @@
 var User = require('../models/users');
 var Poop = require('../models/poop')
-
+var https = require('https');
+const axios = require('axios');
 var async = require('async');
 
 exports.index = function(req, res, next) {
@@ -17,22 +18,39 @@ exports.index = function(req, res, next) {
         });
     }
 
-exports.user_list = function(req, res) {
-    res.json({ a: 1 });
-};
+// exports.user = function(req, res) {
+//     if (req.query.type === 'isUsernameUnique') {
+//         res.json({ a: 1 });
+//     } else {
+//         res.status(400).json({error: 'Invalid parameters.'});
+//     }
+// };
 
-exports.user_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: User detail: ' + req.params.id);
-};
 
-exports.user_create_get = function(req, res) {
-    res.send('NOT IMPLEMENTED: User create GET');
-};
+exports.isUsernameUnique = async function (req, res) {
 
-exports.user_create_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: User create POST');
-};
+    if (req.query.type !== 'isUsernameUnique') {
+        res.status(400).json({error: 'Invalid parameters.'});
+    }
 
-exports.user_delete_post = function(req, res) {
-    res.send('NOT IMPLEMENTED: User delete POST');
-};
+    try {
+        const headers = {
+            'Authorization': 'Bearer ' + req.query.token,
+        };
+
+        const url = 'https://dev-mn6falogt3c14mat.us.auth0.com/api/v2/users?q=user_metadata.ayeUsername%3A%22'
+        + req.query.username + '%22&search_engine=v3';
+
+        const response = await axios.get(url, {
+            headers: headers,
+        });
+
+        const responseBody = response.data;
+
+        res.json(responseBody);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: 'An error occurred while making the request. Contact Gonah Software for assistance.'});
+    }
+}
