@@ -16,6 +16,8 @@ router.get('/', user_controller.index);
 
 router.get('/users', user_controller.isUsernameUnique);
 
+router.patch('/users', user_controller.updateAyeUser);
+
 // router.get('/user/:id', user_controller.user_detail);
 
 
@@ -41,8 +43,8 @@ router.get('/poop/:id', poop_controller.poop_detail);
 
 router.post('/system/web-server-restart', webController.web_backend_restart);
 
-router.get('/auth', auth_controller.auth);
+router.get('/auth', auth_controller.get_management_token);
 
-
+// router.post('/auth', auth_controller.post_management_token);
 
 module.exports = router;

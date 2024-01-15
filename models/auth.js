@@ -8,6 +8,7 @@ var AuthTokenSchema = new Schema(
         scope: {type: String},
         expires_in: {type: Number},
         token_type: {type: String},
+        expires_at: {type: Date},
     }
 );
 
