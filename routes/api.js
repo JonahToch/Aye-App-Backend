@@ -5,6 +5,7 @@ var router = express.Router();
 var user_controller = require('../controllers/usersController');
 var poop_controller = require('../controllers/poopController');
 var auth_controller = require('../controllers/authController');
+var sesame_controller = require('../controllers/sesameController');
 var webController = require('../controllers/systemController');
 
 
@@ -46,5 +47,7 @@ router.post('/system/web-server-restart', webController.web_backend_restart);
 router.get('/auth', auth_controller.get_management_token);
 
 // router.post('/auth', auth_controller.post_management_token);
+
+router.post('/sesame', sesame_controller.openSesame);
 
 module.exports = router;
