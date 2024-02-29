@@ -48,6 +48,9 @@ router.get('/auth', auth_controller.get_management_token);
 
 // router.post('/auth', auth_controller.post_management_token);
 
-router.post('/sesame', sesame_controller.openSesame);
+router.post('/sesame', sesame_controller.postSesameRouter);
+
+router.get('/sesame', sesame_controller.getSesame);
+
 
 module.exports = router;

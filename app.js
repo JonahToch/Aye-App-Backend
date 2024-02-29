@@ -23,6 +23,7 @@ app.options('*', cors()) // Not sure if needed. According to https://expressjs.c
 var async = require('async');
 var User = require('./models/users');
 var Poop = require('./models/poop');
+var Sesame = require('./models/sesame');
 
 var mongoose = require('mongoose');
 var mongoDB = 'mongodb://localhost:27017/aye';
@@ -43,6 +44,5 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api/v1', apiRouter);
-
 
 module.exports = app;
