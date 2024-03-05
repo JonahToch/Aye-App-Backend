@@ -49,6 +49,7 @@ createSesameController = {
                 message: "New sesameId created",
                 sesame: sesame,
             });
+            return;
         } else {
             Sesame.findOneAndUpdate({
                 sesameId: sesameId,
@@ -67,7 +68,7 @@ createSesameController = {
                     message: "Unable to update sesameId " + sesameId + " with " + userId,
                 })
             });
-
+        return;
         }
 
         res.status(400).json({

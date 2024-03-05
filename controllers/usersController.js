@@ -4,19 +4,19 @@ var https = require('https');
 const axios = require('axios');
 var async = require('async');
 
-exports.index = function(req, res, next) {
+exports.index = function (req, res, next) {
 
     async.parallel({
-        user_count: function(callback) {
+        user_count: function (callback) {
             User.countDocuments({}, callback);
         },
-        poop_count: function(callback) {
+        poop_count: function (callback) {
             Poop.countDocuments({}, callback);
         }
-    }, function(err, results) {
-        res.render('index', { title: 'Aye App Backend Home', error: err, data: results });
-        });
-    }
+    }, function (err, results) {
+        res.render('index', {title: 'Aye App Backend Home', error: err, data: results});
+    });
+}
 
 // exports.user = function(req, res) {
 //     if (req.query.type === 'isUsernameUnique') {
@@ -38,8 +38,10 @@ exports.isUsernameUnique = async function (req, res) {
             'Authorization': 'Bearer ' + req.query.token,
         };
 
-        const url = 'https://dev-mn6falogt3c14mat.us.auth0.com/api/v2/users?q=user_metadata.ayeUsername%3A%22'
-        + req.query.username + '%22&search_engine=v3';
+        // const url = 'https://dev-mn6falogt3c14mat.us.auth0.com/api/v2/users?q=user_metadata.ayeUsername%3A%22'
+        // + req.query.username + '%22&search_engine=v3';
+
+        const url = 'https://dev-mn6falogt3c14mat.us.auth0.com/api/v2/users';
 
         const response = await axios.get(url, {
             headers: headers,
@@ -47,7 +49,19 @@ exports.isUsernameUnique = async function (req, res) {
 
         const responseBody = response.data;
 
-        res.json(responseBody);
+        for (let i = 0; i < responseBody.length; i++) {
+
+            if (responseBody[i].user_metadata?.ayeUsername) {
+                console.log(responseBody[i].user_metadata?.ayeUsername);
+                if (responseBody[i].user_metadata && responseBody[i].user_metadata.ayeUsername !== undefined &&
+                    responseBody[i].user_metadata.ayeUsername.toLowerCase() === req.query.username.toLowerCase()) {
+                    res.json(responseBody[i]);
+                    return;
+                }
+            }
+        }
+
+        res.json([]);
 
     } catch (error) {
         console.error(error);
