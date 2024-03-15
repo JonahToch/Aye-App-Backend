@@ -4,8 +4,9 @@ var Schema = mongoose.Schema;
 
 var PoopSchema = new Schema(
     {
+        userId: {type: String, required: true},
         user: {type: Schema.Types.ObjectId, ref: 'User', required: false},
-        name: {type: String, required: true},
+        name: {type: String, required: false},
         description: {type: String, required: true},
         rating: {type: String, required: true},
         date: {type: Date, required: false},
@@ -21,12 +22,14 @@ var PoopSchema = new Schema(
         dislikes: {type: Number, required: false, default: 0},
         comments: [
                 {
+                        userId: String,
                         user: String,
                         text: String,
                         date: Date,
                         likes: {type: Number, default: 0},
                         dislikes: {type: Number, default: 0},
                         replies: [{
+                                userId: String,
                                 user: String,
                                 text: String,
                                 date: Date,

@@ -16,6 +16,7 @@ router.get('/', user_controller.index);
 // router.post('/user/update', user_controller.user_create_update);
 
 router.get('/users', user_controller.isUsernameUnique);
+router.get('/users2', user_controller.getUserById);
 
 router.patch('/users', user_controller.updateAyeUser);
 

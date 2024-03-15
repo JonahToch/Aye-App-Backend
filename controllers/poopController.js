@@ -14,9 +14,9 @@ exports.poop_list = function (req, res, next) {
 };
 
 
-function poopCreate(name, description, rating, date, fullAddr, longitude, latitude, street, city, longState, country, zipcode) {
+function poopCreate(userId, name, description, rating, date, fullAddr, longitude, latitude, street, city, longState, country, zipcode) {
     poopDetail = {
-        name: name,
+        userId: userId,
         description: description,
         rating: rating,
         date: date,
@@ -93,6 +93,7 @@ exports.poop_add_comment = function (req, res) {
         {
             $push: {
                 comments: {
+                    "userId": req.body.userId,
                     "user": req.body.user,
                     "text": req.body.text,
                     "date": req.body.date
@@ -109,6 +110,7 @@ exports.poop_add_comment_reply = function (req, res) {
     const updateDocument = {
         $push: {
             "comments.$[item].replies": {
+                "userId": req.body.userId,
                 "user": req.body.user,
                 "text": req.body.text,
                 "date": req.body.date
@@ -140,11 +142,14 @@ exports.poop_comment_add_rating = function (req, res) {
 
 };
 
+function handleError(error) {
+    console.error('An error occurred:', error);
+    // Additional error handling logic can be added here
+}
 
 exports.poop_create_post = function (req, res) {
     var poop = new Poop();
-    // poop.user = req.body.user;
-    poop.name = req.body.name;
+    poop.userId = req.body.userId;
     poop.description = req.body.description;
     poop.rating = req.body.rating;
     poop.date = req.body.date;
@@ -162,7 +167,7 @@ exports.poop_create_post = function (req, res) {
     });
 
     res.json({
-        name: poop.name,
+        userId: poop.userId,
         description: poop.description,
         rating: poop.rating,
         date: poop.date,

@@ -52,7 +52,7 @@ exports.isUsernameUnique = async function (req, res) {
         for (let i = 0; i < responseBody.length; i++) {
 
             if (responseBody[i].user_metadata?.ayeUsername) {
-                console.log(responseBody[i].user_metadata?.ayeUsername);
+                // console.log(responseBody[i].user_metadata?.ayeUsername);
                 if (responseBody[i].user_metadata && responseBody[i].user_metadata.ayeUsername !== undefined &&
                     responseBody[i].user_metadata.ayeUsername.toLowerCase() === req.query.username.toLowerCase()) {
                     res.json(responseBody[i]);
@@ -62,6 +62,47 @@ exports.isUsernameUnique = async function (req, res) {
         }
 
         res.json([]);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({error: 'An error occurred while making the request. Contact Gonah Software for assistance.'});
+    }
+}
+
+exports.getUserById = async function (req, res) {
+
+    if (req.query.type !== 'getUserById') {
+        res.status(400).json({error: 'Invalid parameters.'});
+    }
+
+    try {
+        const headers = {
+            'Authorization': 'Bearer ' + req.query.token,
+        };
+
+        const url = 'https://dev-mn6falogt3c14mat.us.auth0.com/api/v2/users/' + req.query.userId;
+        // const url = 'https://dev-mn6falogt3c14mat.us.auth0.com/api/v2/users/auth0%7C65e174d4a54d24662c0b9725';
+
+
+
+        const response = await axios.get(url, {
+            headers: headers,
+        });
+
+        const responseBody = response.data;
+        res.json(responseBody);
+        // for (let i = 0; i < responseBody.length; i++) {
+        //
+        //     if (responseBody[i].user_metadata?.ayeUsername) {
+        //         console.log('THE RESPONSE USERNAME IS ', responseBody[i].user_metadata?.ayeUsername);
+        //         if (responseBody[i].user_metadata && responseBody[i].user_metadata.ayeUsername !== undefined) {
+        //             res.json(responseBody[i]);
+        //             return;
+        //         }
+        //     }
+        // }
+        //
+        // res.json([]);
 
     } catch (error) {
         console.error(error);
